@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+logs
+*.log
+
+# Build folders
+dist/
+build/
+node_modules/
+.env
+
+uploads/
+*.mp4
+*.mov
+*.avi
+*.zip

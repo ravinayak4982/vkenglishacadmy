@@ -1,0 +1,3 @@
+import mongoose from 'mongoose';
+const schema = new mongoose.Schema({ key: { type: String, unique: true, default: 'application' }, appName: { type: String, default: 'VK English Academy' }, logo: { type: String, default: '' }, supportEmail: { type: String, default: '' }, contactNumber: { type: String, default: '' }, upiId: { type: String, default: '' }, qrImage: { type: String, default: '' }, accountDetails: { type: String, default: '' }, privacyPolicy: { type: String, default: '' }, terms: { type: String, default: '' }, about: { type: String, default: '' } }, { timestamps: true });
+export default mongoose.models.Setting || mongoose.model('Setting', schema);
