@@ -12,13 +12,13 @@ import { notifyUser } from './src/services/notificationService.js';
 import { runSubscriptionExpiryReminders } from './src/services/subscriptionReminderService.js';
 
 const port = Number(process.env.PORT || 5000);
-
-// ===================== DEBUG =====================
-console.log('NODE_ENV:', process.env.NODE_ENV);
-console.log('MONGO_URI:', JSON.stringify(process.env.MONGO_URI));
-// ================================================
+// Debug (temporary)
+console.log("MONGO_URI =", JSON.stringify(process.env.MONGO_URI));
+console.log("Starts with mongodb://", process.env.MONGO_URI?.startsWith("mongodb://"));
+console.log("Starts with mongodb+srv://", process.env.MONGO_URI?.startsWith("mongodb+srv://"));
 
 await connectDatabase();
+
 
 const server = createServer(app);
 
