@@ -1,7 +1,11 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+
 export default async function connectDatabase() {
-  if (!process.env.MONGO_URI) throw new Error('MONGO_URI is required');
-  mongoose.set('strictQuery', true);
-  await mongoose.connect(process.env.MONGO_URI);
-  console.log('MongoDB connected');
+  mongoose.set("strictQuery", true);
+
+  await mongoose.connect(
+    "mongodb+srv://ravinayak4982:Indore%40123@cluster0.dh51y.mongodb.net/AcadmyDb?retryWrites=true&w=majority&appName=Cluster0"
+  );
+
+  console.log("MongoDB connected");
 }
