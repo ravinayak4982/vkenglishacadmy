@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import AcademyUser from '../../model/academyUserModel.js';
 import { sendMail } from '../../services/mailService.js';
-import { createToken, success, userData } from '../../utility/academyAuth.js';
+import { createToken, JWT_SECRET, success, userData } from '../../utility/academyAuth.js';
 import Notification from '../../model/academyNotificationModel.js';
 import { notifyAdmins } from '../../services/notificationService.js';
 
@@ -43,7 +43,7 @@ export async function login(req, res) {
 
 export async function refreshToken(req, res) {
   try {
-    const payload = jwt.verify(req.body.refreshToken, process.env.JWT_SECRET);
+    const payload = jwt.verify(req.body.refreshToken, JWT_SECRET);
     if (payload.type !== 'refresh') throw new Error();
     const user = await AcademyUser.findOne({ _id: payload.sub, role: 'user', isActive: true, isDeleted: false });
     if (!user) throw new Error();

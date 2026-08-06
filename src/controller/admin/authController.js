@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import AcademyUser from '../../model/academyUserModel.js';
-import { createToken, success, userData } from '../../utility/academyAuth.js';
+import { createToken, JWT_SECRET, success, userData } from '../../utility/academyAuth.js';
 
 const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex');
 
@@ -35,7 +35,7 @@ export async function refresh(req, res) {
   try {
     const token = req.body.refreshToken;
     if (!token) throw new Error();
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, JWT_SECRET);
     if (payload.type !== 'refresh' || payload.role !== 'admin') throw new Error();
     const admin = await AcademyUser.findOne({
       _id: payload.sub,

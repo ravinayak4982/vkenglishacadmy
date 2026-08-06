@@ -10,6 +10,7 @@ import AcademyUser from './src/model/academyUserModel.js';
 import ChatMessage from './src/model/chatMessageModel.js';
 import { notifyUser } from './src/services/notificationService.js';
 import { runSubscriptionExpiryReminders } from './src/services/subscriptionReminderService.js';
+import { JWT_SECRET } from './src/utility/academyAuth.js';
 
 const port = Number(process.env.PORT || 5000);
 // Debug (temporary)
@@ -59,7 +60,7 @@ io.use(async (socket, next) => {
   try {
     const token = socket.handshake.auth?.token;
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, JWT_SECRET);
 
     if (payload.type !== 'access') {
       throw new Error('Invalid token');

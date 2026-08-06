@@ -1,11 +1,12 @@
 import jwt from 'jsonwebtoken';
 import AcademyUser from '../model/academyUserModel.js';
+import { JWT_SECRET } from '../utility/academyAuth.js';
 
 export async function authenticate(req, res, next) {
   try {
     const token = req.headers.authorization?.replace(/^Bearer\s+/i, '');
     if (!token) throw new Error();
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, JWT_SECRET);
     if (payload.type !== 'access') throw new Error();
     const user = await AcademyUser.findById(payload.sub).select('-password -otp -refreshTokens');
     if (!user || user.isDeleted || !user.isActive) throw new Error();
@@ -25,7 +26,7 @@ export async function optionalAuthenticate(req, res, next) {
   const token = req.headers.authorization?.replace(/^Bearer\s+/i, '');
   if (!token) return next();
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    const payload = jwt.verify(token, JWT_SECRET);
     req.user = await AcademyUser.findById(payload.sub).select('-password -otp -refreshTokens');
   } catch (_) { req.user = null; }
   return next();
